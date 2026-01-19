@@ -4,10 +4,13 @@ import HomePage from './pages/HomePage';
 import ConstituencyPage from './pages/ConstituencyPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 
+// Import the logo image from the assets folder
+import logo from './assets/logo.png'; 
+
 function App() {
   const navStyle = {
     backgroundColor: 'var(--dark-bg-secondary)',
-    padding: '1rem 2rem',
+    padding: '0.75rem 2rem', // Adjusted padding
     borderBottom: '1px solid var(--dark-border)',
     display: 'flex',
     justifyContent: 'space-between',
@@ -21,13 +24,35 @@ function App() {
     fontWeight: 500,
   };
 
-  const logoStyle = { ...navLinkStyle, fontWeight: 'bold', fontSize: '1.5rem', color: 'var(--primary)' };
+  // Style for the logo link container
+  const logoContainerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+  };
+
+  // Style for the logo image itself
+  const logoImageStyle = {
+    height: '40px', // Set the height of the logo
+    marginRight: '10px',
+  };
+
+  // Style for the brand name text
+  const logoTextStyle = {
+    color: 'var(--dark-text)',
+    fontWeight: 'bold',
+    fontSize: '1.5rem',
+  };
   
   return (
     <div>
       <nav style={navStyle}>
         <div>
-          <Link to="/" style={logoStyle}>🇳🇵 Votify</Link>
+          {/* Updated Logo and Title */}
+          <Link to="/" style={logoContainerStyle}>
+            <img src={logo} alt="Chunab Pulse Logo" style={logoImageStyle} />
+            <span style={logoTextStyle}>चुनाव Pulse</span>
+          </Link>
         </div>
         <div>
           <Link to="/" style={navLinkStyle}>Home</Link>
