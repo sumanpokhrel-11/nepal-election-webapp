@@ -1,0 +1,35 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Kathmandu-1" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [85.32, 27.71], [85.33, 27.72], [85.34, 27.71], [85.33, 27.70], [85.32, 27.71]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Lalitpur-3" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [85.31, 27.68], [85.32, 27.69], [85.33, 27.68], [85.32, 27.67], [85.31, 27.68]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Bhaktapur-2" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [85.42, 27.67], [85.43, 27.68], [85.44, 27.67], [85.43, 27.66], [85.42, 27.67]
+        ]]
+      }
+    }
+  ]
+}

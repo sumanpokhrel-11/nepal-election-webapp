@@ -2,58 +2,52 @@ import React from 'react';
 
 const CandidateCard = ({ candidate }) => {
   const cardStyle = {
-    border: '1px solid #ddd',
+    backgroundColor: 'var(--dark-bg)',
     borderRadius: '8px',
-    padding: '1.5rem',
-    textAlign: 'center',
-    backgroundColor: '#fff',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-    cursor: 'pointer',
-  };
-  
-  // A simple hover effect can be done with CSS-in-JS but is easier with a real CSS file or library
-  // For simplicity, we'll just imply it's clickable.
-  
-  const nameStyle = {
-    fontSize: '1.2rem',
-    fontWeight: 'bold',
-    color: '#333',
-    margin: '1rem 0 0.5rem 0',
-  };
-  
-  const partyStyle = {
-    fontSize: '1rem',
-    color: '#555',
+    padding: '1rem',
+    marginBottom: '1rem',
+    display: 'flex',
+    alignItems: 'center',
+    border: '1px solid var(--dark-border)',
+    transition: 'border-color 0.2s',
   };
 
   const placeholderImageStyle = {
-    width: '100px',
-    height: '100px',
+    width: '50px',
+    height: '50px',
     borderRadius: '50%',
-    backgroundColor: '#ccc',
-    margin: '0 auto',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: '#fff',
-    fontWeight: 'bold',
+    backgroundColor: 'var(--dark-border)',
+    marginRight: '1rem',
+    flexShrink: 0,
   };
 
-  const handleClick = () => {
-    alert(`Showing details for ${candidate.name}`);
-    // In a real app, this would navigate to the candidate's full profile page.
-    // e.g., history.push(`/candidate/${candidate.id}`);
+  const infoStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+  };
+
+  const nameStyle = {
+    fontSize: '1.1rem',
+    fontWeight: 'bold',
+    color: 'var(--dark-text)',
+    margin: 0,
+  };
+  
+  const partyStyle = {
+    fontSize: '0.9rem',
+    color: 'var(--primary)',
+    margin: '4px 0 0 0',
   };
 
   return (
-    <div style={cardStyle} onClick={handleClick}>
-      <div style={placeholderImageStyle}>Photo</div>
-      <h3 style={nameStyle}>{candidate.name}</h3>
-      <p style={partyStyle}>{candidate.party}</p>
+    <div style={cardStyle} onMouseOver={e => e.currentTarget.style.borderColor = 'var(--primary)'} onMouseOut={e => e.currentTarget.style.borderColor = 'var(--dark-border)'}>
+      <div style={placeholderImageStyle}></div>
+      <div style={infoStyle}>
+        <h3 style={nameStyle}>{candidate.name}</h3>
+        <p style={partyStyle}>{candidate.party} ({candidate.type})</p>
+      </div>
     </div>
   );
 };
 
 export default CandidateCard;
-

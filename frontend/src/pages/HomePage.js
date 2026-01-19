@@ -1,42 +1,53 @@
 import React from 'react';
-import ThreeDMap from '../components/ThreeDMap'; // Placeholder for the map component
+import ThreeDMap from '../components/ThreeDMap';
+import CandidateCard from '../components/CandidateCard';
+
+const candidates = [
+  { id: 1, name: 'Prakash Man Singh', party: 'Nepali Congress', type: 'Direct' },
+  { id: 2, name: 'Rabindra Mishra', party: 'RPP', type: 'Direct' },
+  { id: 3, name: 'Pukar Bam', party: 'RSP', type: 'Direct' },
+  { id: 4, name: 'Gagan Thapa', party: 'Nepali Congress', type: 'PR' },
+];
 
 const HomePage = () => {
-  const pageStyle = {
-    fontFamily: 'Arial, sans-serif',
-    textAlign: 'center',
-    padding: '2rem',
+  const homeStyle = {
+    display: 'flex',
+    height: 'calc(100vh - 65px)', // Full height minus navbar
   };
 
-  const headerStyle = {
-    marginBottom: '2rem',
+  const mapContainerStyle = {
+    flex: 1,
+    height: '100%',
   };
-
-  const titleStyle = {
-    fontSize: '2.5rem',
-    color: '#333',
-    marginBottom: '0.5rem',
+  
+  const listContainerStyle = {
+    flex: 1,
+    height: '100%',
+    overflowY: 'auto',
+    padding: '1rem',
+    backgroundColor: 'var(--dark-bg-secondary)',
   };
-
-  const subtitleStyle = {
-    fontSize: '1.2rem',
-    color: '#666',
+  
+  const listHeader = {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    color: 'var(--primary)',
+    marginBottom: '1rem',
+    paddingBottom: '0.5rem',
+    borderBottom: '2px solid var(--primary)',
   };
 
   return (
-    <div style={pageStyle}>
-      <header style={headerStyle}>
-        <h1 style={titleStyle}>Nepal Election Explorer</h1>
-        <p style={subtitleStyle}>
-          Click on a constituency on the map to see candidates and details.
-        </p>
-      </header>
-      
-      {/* 
-        This is where the interactive 3D map will be rendered.
-        For now, it's a placeholder component.
-      */}
-      <ThreeDMap />
+    <div style={homeStyle}>
+      <div style={mapContainerStyle}>
+        <ThreeDMap />
+      </div>
+      <div style={listContainerStyle}>
+        <h2 style={listHeader}>Candidates: Kathmandu-1</h2>
+        {candidates.map(candidate => (
+          <CandidateCard key={candidate.id} candidate={candidate} />
+        ))}
+      </div>
     </div>
   );
 };

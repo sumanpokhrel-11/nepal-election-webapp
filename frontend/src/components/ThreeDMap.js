@@ -1,43 +1,72 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const ThreeDMap = () => {
-  const mapContainerStyle = {
-    height: '60vh',
-    width: '100%',
-    backgroundColor: '#e9ecef',
-    borderRadius: '8px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    cursor: 'pointer',
-    border: '2px dashed #adb5bd',
-  };
+  const [geoData, setGeoData] = useState(null);
 
-  const mapTextStyle = {
-    color: '#495057',
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
+  useEffect(() => {
+    // Fetch the GeoJSON data from the public folder
+    fetch('/nepal-constituencies.json')
+      .then(res => res.json())
+      .then(data => setGeoData(data));
+  }, []);
+  
+  const mapStyle = { height: '100%', width: '100%', backgroundColor: 'var(--dark-bg)' };
+
+  const onEachFeature = (feature, layer) => {
+    // This function runs for each constituency feature
+    if (feature.properties && feature.properties.name) {
+      // Add a popup to show the constituency name on click
+      layer.bindPopup(feature.properties.name);
+    }
+    
+    // Add mouse events for hover effect
+    layer.on({
+      mouseover: (e) => {
+        const l = e.target;
+        l.setStyle({
+          weight: 3,
+          color: 'var(--primary)',
+          fillOpacity: 0.7
+        });
+      },
+      mouseout: (e) => {
+        // 'e.target' is the GeoJSON layer
+        e.target.setStyle(geoJsonStyle);
+      },
+      click: (e) => {
+        // You can add logic here for when a constituency is clicked
+        console.log(`Clicked on: ${feature.properties.name}`);
+      }
+    });
   };
   
-  const mapSubTextStyle = {
-    color: '#6c757d',
-    marginTop: '0.5rem',
-  };
-
-  const handleClick = () => {
-    // In a real app, clicking the map would trigger a navigation
-    // or display information about the clicked constituency.
-    alert('Navigating to Constituency: Kathmandu-1 (Example)');
-    // For a real app, you would use react-router-dom:
-    // history.push('/constituency/1');
+  const geoJsonStyle = {
+    fillColor: 'var(--secondary)',
+    weight: 2,
+    opacity: 1,
+    color: 'var(--accent)',
+    fillOpacity: 0.4
   };
 
   return (
-    <div style={mapContainerStyle} onClick={handleClick}>
-      <div style={mapTextStyle}>[ Interactive 3D Map Placeholder ]</div>
-      <p style={mapSubTextStyle}>Click here to simulate selecting a constituency.</p>
-    </div>
+    <MapContainer center={[27.7172, 85.3240]} zoom={11} style={mapStyle}>
+      {/* Use a dark tile layer for the base map */}
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+      />
+      
+      {/* Render constituencies if data is loaded */}
+      {geoData && (
+        <GeoJSON 
+          data={geoData} 
+          style={geoJsonStyle}
+          onEachFeature={onEachFeature} 
+        />
+      )}
+    </MapContainer>
   );
 };
 
